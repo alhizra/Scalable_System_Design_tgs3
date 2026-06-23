@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bangkok University Cache Demo</title>
+</head>
+<body>
+
+    <h1>Top Universities in Bangkok</h1>
+
+    <form method="GET">
+        <label>Pilih Universitas:</label>
+
+        <select name="id">
+            <option value="1"
+                {% if selected_id == "1" %}selected{% endif %}>
+                Chulalongkorn University
+            </option>
+
+            <option value="2"
+                {% if selected_id == "2" %}selected{% endif %}>
+                Mahidol University
+            </option>
+
+            <option value="3"
+                {% if selected_id == "3" %}selected{% endif %}>
+                Thammasat University
+            </option>
+        </select>
+
+        <button type="submit">
+            Lihat Data
+        </button>
+    </form>
+
+    <hr>
+
+    {% if source == "CACHE HIT" %}
+        <h2 style="color:green;">
+            🟢 {{ source }}
+        </h2>
+    {% else %}
+        <h2 style="color:red;">
+            🔴 {{ source }}
+        </h2>
+    {% endif %}
+
+    <h3>{{ data.nama }}</h3>
+
+    <p>
+        <b>Location:</b>
+        {{ data.lokasi }}
+    </p>
+
+    <p>
+        <b>Ranking:</b>
+        {{ data.ranking }}
+    </p>
+
+    <h3>
+        Response Time:
+        {{ response_time }} seconds
+    </h3>
+
+    <hr>
+
+    <h3>Universities Stored in Cache</h3>
+
+    <ul>
+        {% for key in cache_keys %}
+            <li>University ID {{ key }}</li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="location.reload()">
+        Request Again
+    </button>
+
+    <button onclick="window.location='/clear'">
+        Clear Cache
+    </button>
+
+</body>
+</html>
